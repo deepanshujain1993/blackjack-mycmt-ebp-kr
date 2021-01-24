@@ -11,6 +11,16 @@ public class Player {
     }
 
     public void bets(int betAmount) {
+        updateAttributes(betAmount);
+        addBonus(betAmount);
+    }
+
+    private void addBonus(int betAmount) {
+        if (betAmount >= 100)
+            balance += 10;
+    }
+
+    private void updateAttributes(int betAmount) {
         bet = betAmount;
         balance -= betAmount;
         totalBetAmount += betAmount;

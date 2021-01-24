@@ -54,7 +54,7 @@ public class PlayerBettingTest {
         player.wins();
         player.bets(20);
         player.loses();
-        assertThat(player.totalAmountBet()).isEqualTo(35);
+        assertThat(player.totalAmountBet()).isEqualTo(15 + 20);
     }
 
     @Test
@@ -66,7 +66,36 @@ public class PlayerBettingTest {
         player.loses();
         player.bets(100);
         player.loses();
-        assertThat(player.totalAmountBet()).isEqualTo(135);
+        assertThat(player.totalAmountBet()).isEqualTo(15 + 20 + 100);
+    }
+
+    @Test
+    public void playerWith140Bets100TiesGetsBonusOf10BalanceIs150() throws Exception {
+        Player player = createPlayerWithBalance(140);
+        player.bets(100);
+        player.ties();
+        assertThat(player.balance())
+                .isEqualTo(140 + 10);
+    }
+
+    @Test
+    public void playerWith140Bets99TiesBalanceIs150() throws Exception{
+        Player player = createPlayerWithBalance(140);
+        player.bets(99);
+        player.ties();
+        assertThat(player.balance())
+                .isEqualTo(140);
+    }
+
+    @Test
+    public void playerWith140Bets100TiesBets120LosesGetsBonusOf20BalanceIs40() throws Exception{
+        Player player = createPlayerWithBalance(140);
+        player.bets(100);
+        player.ties();
+        player.bets(120);
+        player.loses();
+        assertThat(player.balance())
+                .isEqualTo(140 + 10 - 120 + 10);
     }
 
     private Player createPlayerWithBalance(int amount) {
