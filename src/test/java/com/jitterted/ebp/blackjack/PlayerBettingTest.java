@@ -47,6 +47,27 @@ public class PlayerBettingTest {
                 .isEqualTo(18);
     }
 
+    @Test
+    public void playerWith30Bets15Bets20TotalAmountBet35() throws Exception {
+        Player player = createPlayerWithBalance(30);
+        player.bets(15);
+        player.wins();
+        player.bets(20);
+        player.loses();
+        assertThat(player.totalAmountBet()).isEqualTo(35);
+    }
+
+    @Test
+    public void playerWith300Bets15Bets20Bets100TotalAmountBet135() throws Exception {
+        Player player = createPlayerWithBalance(300);
+        player.bets(15);
+        player.wins();
+        player.bets(20);
+        player.loses();
+        player.bets(100);
+        player.loses();
+        assertThat(player.totalAmountBet()).isEqualTo(135);
+    }
 
     private Player createPlayerWithBalance(int amount) {
         Player player = new Player();
